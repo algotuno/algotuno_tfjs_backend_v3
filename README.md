@@ -53,3 +53,6 @@ Output Example:
     }
 }
 ```
+
+Example with POSTMAN:
+<img width="839" alt="Screenshot 2022-06-07 at 11 18 20 PM" src="https://user-images.githubusercontent.com/22993048/172420069-23042252-940e-491b-9a41-49ebe60b17ac.png">
