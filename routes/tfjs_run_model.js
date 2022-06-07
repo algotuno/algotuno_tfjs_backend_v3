@@ -1,7 +1,7 @@
-const {run_api_model} = require("../components/tensorflow/run_api_model_v4");
+const {run_api_model} = require("../components/tensorflow/run_api_model_v5");
 
 const {APPL_PRICE_LATEST} = require("../components/tensorflow/dummy_dataset/app_price_latest");
-const {NEXT_PUBLIC_AZURE_BLOB_STORAGE_TF_MODELS} = require("../components/constants.js");
+const {NEXT_PUBLIC_AZURE_BLOB_STORAGE_TF_MODELS, MODEL_TYPE} = require("../components/constants.js");
 
 var express = require('express');
 var router = express.Router();
@@ -42,6 +42,7 @@ router.post('/', async (req, res) => {
             "message": message,
             "result": {
                 "ticker_symbol": `${ticker_symbol}`,
+                "model_type": MODEL_TYPE,
                 "prediction": prediction_result
             },
         });
@@ -50,6 +51,7 @@ router.post('/', async (req, res) => {
             "message": `ERROR processing forecasting result for ticker_symbol : ${ticker_symbol}`,
             "result": {
                 "ticker_symbol": `${ticker_symbol}`,
+                "model_type": MODEL_TYPE,
                 "prediction": []
             }
         });

@@ -60,7 +60,8 @@ async function run_api_model(stock_data, _tf_model_dir) {
             let day30 = result.output_ys_list[29]; // day 30
             function _convert_array_to_obj(_day_array) {
                 const _obj = {};
-                _obj[_day_array[1].toISOString()] = _day_array[0];
+                console.log(_day_array);
+                _obj[_day_array[1]] = _day_array[0];
                 return _obj;
             }
 
@@ -76,6 +77,6 @@ async function run_api_model(stock_data, _tf_model_dir) {
     return predict_result;
 }
 
-module.exports =  {
+module.exports = {
     run_api_model
-}
+};

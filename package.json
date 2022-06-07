@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "dev": "nodemon",
     "start": "node ./bin/www"
   },
   "dependencies": {
@@ -13,5 +14,8 @@
     "express": "~4.16.1",
     "lodash": "^4.17.21",
     "morgan": "~1.9.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
   }
 }
