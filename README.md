@@ -27,7 +27,7 @@ Input Example:
 
 ```
 {
-    "ticker_symbol" : "APPL",
+    "ticker_symbol" : "AAPL",
     "stock_metadata_list" : []
 }
 ```
@@ -37,7 +37,7 @@ Output Example:
 {
     "message": "SUCCESS",
     "result": {
-        "ticker_symbol": "APPL",
+        "ticker_symbol": "AAPL",
         "model_type": 1,
         "prediction": [
             {
