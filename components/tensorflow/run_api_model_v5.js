@@ -61,7 +61,8 @@ async function run_api_model(stock_data, _tf_model_dir) {
             function _convert_array_to_obj(_day_array) {
                 const _obj = {};
                 console.log(_day_array);
-                _obj[_day_array[1]] = _day_array[0];
+                const epoch_time = _day_array[1].getTime().toString();
+                _obj[epoch_time] = _day_array[0];
                 return _obj;
             }
 
