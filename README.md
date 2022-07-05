@@ -1,6 +1,11 @@
 ## Algotuno Tensorflow.js backend V3
 This is the tensorflow backend api sample project.
 
+## Node Version to run
+1. It is recommended to run this app with the node.js version 14
+2. the version that should be used is `14.7.3`
+3. if you need to use different versions of node.js, use NVM(node version manager)
+
 #### How to start project
 1. run `npm install` in the command line on the root directory
 2. run `npm start` or `npm dev` in the command line on the root directory
@@ -17,7 +22,7 @@ Added the following scripts:
 To run a forecast on a specific stock, send a POST request to the **/tfjs_run_model/** endpoint with the body contents as such:
 NOTE: the `stock_metadata_list` should be prefilled with the stock data coming from the **/api/stock/get_hsp** api
 
-**URL ENDPOINTS TO HIT**
+**AVAILABLE URL ENDPOINTS TO HIT**
 > LOCALHOST: localhost:3000/tfjs_run_model/
 
 > INTERNET: algotunotfjsv3.azurewebsites.net/tfjs_run_model/

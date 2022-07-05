@@ -6,7 +6,7 @@ const {NEXT_PUBLIC_AZURE_BLOB_STORAGE_TF_MODELS, MODEL_TYPE} = require("../compo
 var express = require('express');
 var router = express.Router();
 
-/* GET users listing. */
+/* GET tfjs api */
 router.get('/', function (req, res, next) {
     res.send({message: 'Welcome to the tfjs model api!'});
 });
