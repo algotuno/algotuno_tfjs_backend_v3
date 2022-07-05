@@ -5,7 +5,7 @@ require('dotenv').config();
 const {NEXT_PUBLIC_AZURE_BLOB_STORAGE_TF_MODELS, MODEL_TYPE, CONTAINER_NAME} = require("../components/constants.js");
 const {BlobServiceClient} = require('@azure/storage-blob');
 // Connect to Microsoft Azure
-const blobServiceClient = BlobServiceClient.fromConnectionString(process.env.AZURE_STORAGE_CONNECTION_STRING);
+const blobServiceClient = BlobServiceClient.fromConnectionString(process.env.AZURESTORAGECONNECTIONSTRING);
 // Get a reference to a container
 const containerClient = blobServiceClient.getContainerClient(CONTAINER_NAME);
 
@@ -14,11 +14,11 @@ router.get('/', function (req, res, next) {
     res.send({message: 'Welcome to the azure api!'});
 });
 
-/*
-GET list of all the blobs in the tensorflow container
-*
-*
-* */
+router.get('/test_connection_string',function (req, res, next) {
+    res.next({ message : process.env.AZURESTORAGECONNECTIONSTRING });
+})
+
+/* GET list of all the blobs in the tensorflow container */
 router.get("/list_all_blobs", async function (req, res, next) {
     function get_item_from_javascript_obj(company_name, company_list) {
         if (!(company_name in company_list)) {
