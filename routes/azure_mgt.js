@@ -69,25 +69,39 @@ router.get("/list_all_blobs", async function (req, res, next) {
     res.send({file_list: list_of_companies, get_companies_by_file_name: outcome_for_get_companies_by_file_name});
 });
 
-router.post('/delete_blob', function (req, res) {
+router.post('/delete_blob', async function (req, res) {
     async function deleteBlobIfItExists(containerClient, blobName) {
+        const output = {
+            "did_succeed": false,
+            "error_code": "",
+        };
 
         // include: Delete the base blob and all of its snapshots.
         // only: Delete only the blob's snapshots and not the blob itself.
         const options = {
             deleteSnapshots: 'include' // or 'only'
-        }
+        };
 
         // Create blob client from container client
         const blockBlobClient = await containerClient.getBlockBlobClient(blobName);
+        const res = await blockBlobClient.deleteIfExists(options);
 
-        await blockBlobClient.deleteIfExists(options);
+        if (res.succeeded === true) {
+            output.did_succeed = true;
+        } else {
+            output.did_succeed = false;
+            output.error_code = res.errorCode;
+        }
 
-        console.log(`deleted blob ${blobName}`);
-
+        return output;
     }
 
-    res.json({requestBody: req.body});
+    const blob_name = req.body.blob_name === undefined ? "" : req.body.blob_name;
+    const did_succeed = await deleteBlobIfItExists(containerClient, blob_name);
+    res.json({
+        ...did_succeed,
+        "blob_name": blob_name,
+    });
 });
 
 
