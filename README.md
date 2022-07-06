@@ -16,7 +16,7 @@ This is the tensorflow backend api sample project.
 
 #### In microsoft azure
 1. Store the secret key in this configuration page in microsoft azure.
-<img width="839" alt="Screenshot 2022-06-07 at 11 18 20 PM" src="https://user-images.githubusercontent.com/22993048/177581042-4d991d23-840d-47fa-a93f-ed4a4a49fcb1.png">
+<img width="839" alt="Screenshot 2022-06-07 at 11 18 20 PM" src="https://user-images.githubusercontent.com/22993048/177581978-832a738d-8880-4d18-956c-adccbf182522.png">
 
 #### In local machine
 2. Store the secret key in the .env file
