@@ -72,5 +72,26 @@ router.get("/list_all_blobs", async function (req, res, next) {
     res.send({file_list: list_of_companies , get_companies_by_file_name : outcome_for_get_companies_by_file_name });
 });
 
+router.post('/delete_blob', function (req, res) {
+    async function deleteBlobIfItExists(containerClient, blobName) {
+
+        // include: Delete the base blob and all of its snapshots.
+        // only: Delete only the blob's snapshots and not the blob itself.
+        const options = {
+            deleteSnapshots: 'include' // or 'only'
+        }
+
+        // Create blob client from container client
+        const blockBlobClient = await containerClient.getBlockBlobClient(blobName);
+
+        await blockBlobClient.deleteIfExists(options);
+
+        console.log(`deleted blob ${blobName}`);
+
+    }
+
+    res.json({ requestBody : req.body }) ;
+});
+
 
 module.exports = router;
