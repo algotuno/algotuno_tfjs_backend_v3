@@ -14,9 +14,6 @@ router.get('/', function (req, res, next) {
     res.send({message: 'Welcome to the azure api!'});
 });
 
-router.get('/test_connection_string',function (req, res, next) {
-    res.next({ message : process.env.AZURESTORAGECONNECTIONSTRING });
-})
 
 /* GET list of all the blobs in the tensorflow container */
 router.get("/list_all_blobs", async function (req, res, next) {
@@ -69,7 +66,28 @@ router.get("/list_all_blobs", async function (req, res, next) {
     const list_of_companies = outcome_for_get_companies_by_file_name ?
         Object.keys(group_files_by_company_name) : group_files_by_company_name;
 
-    res.send({file_list: list_of_companies , get_companies_by_file_name : outcome_for_get_companies_by_file_name });
+    res.send({file_list: list_of_companies, get_companies_by_file_name: outcome_for_get_companies_by_file_name});
+});
+
+router.post('/delete_blob', function (req, res) {
+    async function deleteBlobIfItExists(containerClient, blobName) {
+
+        // include: Delete the base blob and all of its snapshots.
+        // only: Delete only the blob's snapshots and not the blob itself.
+        const options = {
+            deleteSnapshots: 'include' // or 'only'
+        }
+
+        // Create blob client from container client
+        const blockBlobClient = await containerClient.getBlockBlobClient(blobName);
+
+        await blockBlobClient.deleteIfExists(options);
+
+        console.log(`deleted blob ${blobName}`);
+
+    }
+
+    res.json({requestBody: req.body});
 });
 
 
