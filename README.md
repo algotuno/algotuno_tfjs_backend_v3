@@ -12,6 +12,19 @@ This is the tensorflow backend api sample project.
 
 > Note: npm start runs production build.
 
+## How to setup environment variables in the project
+
+#### In microsoft azure
+1. Store the secret key in this configuration page in microsoft azure.
+<img width="839" alt="Screenshot 2022-06-07 at 11 18 20 PM" src="https://user-images.githubusercontent.com/22993048/177581978-832a738d-8880-4d18-956c-adccbf182522.png">
+
+#### In local machine
+2. Store the secret key in the .env file
+- take the .env.example
+- make a copy of it
+- add the secret key in this file, the values placed in the environment file will be used across the entire app
+- DO NOT COMMIT THE .env file !!
+
 ## AVAILABLE API ENDPOINTS
 1. RUN AN EXISTING MACHINE LEARNING MODEL (POST REQUEST)
 2. GET ALL THE BLOB STORAGE FILES (GET REQUEST)
