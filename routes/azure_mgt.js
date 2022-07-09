@@ -1,5 +1,6 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const formidableMiddleware = require('express-formidable');
 
 require('dotenv').config();
 const {NEXT_PUBLIC_AZURE_BLOB_STORAGE_TF_MODELS, MODEL_TYPE, CONTAINER_NAME} = require("../components/constants.js");
@@ -44,7 +45,7 @@ router.get("/list_all_blobs", async function (req, res, next) {
             });
             return company_list;
         }
-    }
+    };
 
     async function get_list_of_companies_from_azure() {
         const list_of_files = [];
@@ -69,26 +70,77 @@ router.get("/list_all_blobs", async function (req, res, next) {
     res.send({file_list: list_of_companies, get_companies_by_file_name: outcome_for_get_companies_by_file_name});
 });
 
-router.post('/delete_blob', function (req, res) {
+/* Delete blob from microsoft azure */
+router.post('/delete_blob', async function (req, res) {
     async function deleteBlobIfItExists(containerClient, blobName) {
+        const output = {
+            "did_succeed": false,
+            "error_code": "",
+        };
 
         // include: Delete the base blob and all of its snapshots.
         // only: Delete only the blob's snapshots and not the blob itself.
         const options = {
             deleteSnapshots: 'include' // or 'only'
-        }
+        };
 
         // Create blob client from container client
         const blockBlobClient = await containerClient.getBlockBlobClient(blobName);
+        const res = await blockBlobClient.deleteIfExists(options);
 
-        await blockBlobClient.deleteIfExists(options);
+        if (res.succeeded === true) {
+            output.did_succeed = true;
+        } else {
+            output.did_succeed = false;
+            output.error_code = res.errorCode;
+        }
 
-        console.log(`deleted blob ${blobName}`);
-
+        return output;
     }
 
-    res.json({requestBody: req.body});
+    const blob_name = req.body.blob_name === undefined ? "" : req.body.blob_name;
+    const did_succeed = await deleteBlobIfItExists(containerClient, blob_name);
+    res.json({
+        ...did_succeed,
+        "blob_name": blob_name,
+    });
 });
 
+
+/* upload blob to microsoft azure */
+router.post('/upload_blob/:stock_name', formidableMiddleware(), async (req, res) => {
+    if (req.params.stock_name === undefined || req.params.stock_name === "") {
+        res.send({message: "Error: no stock name specified in the url parameters !!"});
+        return
+    }
+
+    const files = req.files;
+    const no_of_files = Object.keys(files).length;
+
+    if (no_of_files > 0) {
+        try {
+            for (const key in files) {
+                const obj = req.files[key];
+                const filename = obj.name;
+                const tempfilepath = obj.path;
+
+                // create the full file path to upload the files
+                const full_directory = `${req.params.stock_name}/${filename}`;
+
+                // get a block blob client
+                const blockBlobClient = await containerClient.getBlockBlobClient(full_directory);
+                const uploadBlobResponse = await blockBlobClient.uploadFile(tempfilepath);
+
+                console.log(uploadBlobResponse);
+            }
+
+            res.send({message: "File upload is successful !!"});
+        } catch (e) {
+            res.send({message: "Error: error uploading File !!"});
+        }
+    } else {
+        res.send({message: 'Error: No files received !!'});
+    }
+});
 
 module.exports = router;

@@ -12,6 +12,19 @@ This is the tensorflow backend api sample project.
 
 > Note: npm start runs production build.
 
+## How to setup environment variables in the project
+
+#### In microsoft azure
+1. Store the secret key in this configuration page in microsoft azure.
+<img width="839" alt="Screenshot 2022-06-07 at 11 18 20 PM" src="https://user-images.githubusercontent.com/22993048/177581978-832a738d-8880-4d18-956c-adccbf182522.png">
+
+#### In local machine
+2. Store the secret key in the .env file
+- take the .env.example
+- make a copy of it
+- add the secret key in this file, the values placed in the environment file will be used across the entire app
+- DO NOT COMMIT THE .env file !!
+
 ## AVAILABLE API ENDPOINTS
 1. RUN AN EXISTING MACHINE LEARNING MODEL (POST REQUEST)
 2. GET ALL THE BLOB STORAGE FILES (GET REQUEST)
@@ -61,7 +74,7 @@ Output Example:
 
 Example with POSTMAN:
 
-<img width="839" alt="Screenshot 2022-06-07 at 11 18 20 PM" src="https://user-images.githubusercontent.com/22993048/177574094-55cdf8e8-0faf-48aa-82fa-b36beab817c9.png">
+<img width="839" alt="get_tensorflow_api" src="https://user-images.githubusercontent.com/22993048/177574094-55cdf8e8-0faf-48aa-82fa-b36beab817c9.png">
 
 
 #### GET ALL THE BLOB STORAGE FILES (GET REQUEST)
@@ -99,4 +112,63 @@ Output Example:
 
 Example with POSTMAN:
 
-<img width="839" alt="Screenshot 2022-06-07 at 11 18 20 PM" src="https://user-images.githubusercontent.com/22993048/177574463-d22499dc-2b2b-497c-a342-2bf662730ae9.png">
+<img width="839" alt="get_all_files_list_api" src="https://user-images.githubusercontent.com/22993048/177574463-d22499dc-2b2b-497c-a342-2bf662730ae9.png">
+
+
+#### DELETE BLOB STORAGE (POST REQUEST)
+This API will help in deleting a blob storage.
+
+**AVAILABLE URL ENDPOINTS TO HIT**
+> LOCALHOST: http://localhost:3000/azure_mgt/delete_blob
+> INTERNET: algotunotfjsv3.azurewebsites.net/azure_mgt/delete_blob
+
+
+Input Example: 
+
+```
+{
+    "blob_name" : "test/1.jpeg"
+}
+```
+
+Output Example:
+```
+{
+    "did_succeed": true,
+    "error_code": "",
+    "blob_name": "test/1.jpeg"
+}
+```
+
+Example with POSTMAN:
+
+<img width="839" alt="delete_file_api" src="https://user-images.githubusercontent.com/22993048/178092588-033c85e2-c0a1-4cdd-9a48-ac210901f05b.png">
+
+
+#### UPLOAD FILES INTO BLOB STORAGE (POST REQUEST)
+This API will help in allowing files to be uploaded into a blob storage.
+there is an additional parameter to pass in the URL and that is the name of the stock name.
+NOTE: there is no validation check to check if there is an existing file in the folder, if the file with the same
+file name is uploaded, then the existing file will be overridden.
+
+**AVAILABLE URL ENDPOINTS TO HIT**
+> LOCALHOST: http://localhost:3000/azure_mgt/upload_blob/REPLACE_STOCK_NAME_HERE
+> INTERNET: algotunotfjsv3.azurewebsites.net/azure_mgt/upload_blob/REPLACE_STOCK_NAME_HERE
+
+
+Input Example: 
+
+```
+# unable to display since the input data is a form-data
+```
+
+Output Example:
+```
+{
+    "message": "File upload is successful !!"
+}
+```
+
+Example with POSTMAN:
+
+<img width="839" alt="upload_file_api" src="https://user-images.githubusercontent.com/22993048/178094613-eb406c52-0fad-469e-be37-0c75fe0a857b.png">
