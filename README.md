@@ -59,13 +59,22 @@ Output Example:
         "model_type": 1,
         "prediction": [
             {
-                "1640995200000": 176.67007446289062
+                "epoch_time": "1640995200000",
+                "price": 176.67007446289062,
+                "confidence_score": 96.87,
+                "rate_of_error": 6.96752702382252
             },
             {
-                "1641513600000": 173.08694458007812
+                "epoch_time": "1641513600000",
+                "price": 173.08694458007812,
+                "confidence_score": 95.2,
+                "rate_of_error": 7.825910510468507
             },
             {
-                "1643500800000": 165.156982421875
+                "epoch_time": "1643500800000",
+                "price": 165.156982421875,
+                "confidence_score": 93.75,
+                "rate_of_error": 11.944328138535584
             }
         ]
     }
@@ -74,7 +83,7 @@ Output Example:
 
 Example with POSTMAN:
 
-<img width="839" alt="get_tensorflow_api" src="https://user-images.githubusercontent.com/22993048/177574094-55cdf8e8-0faf-48aa-82fa-b36beab817c9.png">
+<img width="839" alt="get_tensorflow_api" src="https://user-images.githubusercontent.com/22993048/180637339-3f05657f-e6ba-4860-8881-b7debb84d4a5.png">
 
 
 #### GET ALL THE BLOB STORAGE FILES (GET REQUEST)
